@@ -12,8 +12,9 @@ const ListPage = () => {
         heroText={"List Page"}
       />
       <Text style={styles.headerText}>Incomplete</Text>
-     <ListItem id={1} listType={0} />
+     <ListItem id={1} listType={0} done={false} />
       <Text style={styles.headerText}>Completed</Text>
+     <ListItem id={7} listType={1} done={true} />
     </SafeAreaView>
   );
 };

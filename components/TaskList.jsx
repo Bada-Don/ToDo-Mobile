@@ -1,26 +1,19 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  FlatList,
-} from "react-native";
+import { StyleSheet, Text, View, Pressable, FlatList } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import React from "react";
-import uuid from 'react-native-uuid';
+import uuid from "react-native-uuid";
 import { Button } from "react-native-paper";
-
 
 const openTaskList = () => {
   console.log("Open Task List");
 };
 
-const TaskList = ({Data, scrollEnabled}) => {
+const TaskList = ({ Data, scrollEnabled }) => {
   return (
     <View style={styles.DataSection}>
       <FlatList
         data={Data}
-        keyExtractor={(item) => item.id.toString()}  // Add this line
+        keyExtractor={(item) => item.id.toString()} // Add this line
         style={styles.Data}
         scrollEnabled={scrollEnabled}
         showsVerticalScrollIndicator={true}
@@ -32,7 +25,11 @@ const TaskList = ({Data, scrollEnabled}) => {
             ]}
             onPress={openTaskList}
           >
-            <Button icon={circle-outline} textColor="white" />
+            <Icon
+              name={item.icon}
+              color={item.color}
+              size={24}
+            />
             <Text style={styles.listItemText}>{item.title}</Text>
           </Pressable>
         )}
@@ -45,7 +42,7 @@ export default TaskList;
 
 const styles = StyleSheet.create({
   DataSection: {
-    height: "30%", // This allows the section to take remaining space
+    height: "28%", // This allows the section to take remaining space
     width: "100%",
   },
   Data: {

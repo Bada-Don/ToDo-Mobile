@@ -20,7 +20,7 @@ const HomeScreen = () => {
     console.log(task);
     setTaskCount(taskCount + 1);
     UserList.push({
-      title: task + ` ${taskCount}`,
+      title: task,
       icon: "shopping",
       color: "#6a6a6aff",
       id: taskCount,
@@ -36,8 +36,10 @@ const HomeScreen = () => {
   return (
     <PaperProvider>
       <SafeAreaView style={styles.container}>
-
-        <Banner bannerImg={require("../assets/blackBanner.jpg")} heroText={"Welcome Harshit"} />
+        <Banner
+          bannerImg={require("../assets/blackBanner.jpg")}
+          heroText={"Welcome Harshit"}
+        />
 
         <Text style={styles.headerText}>Your Tasks List</Text>
 
