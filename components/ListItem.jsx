@@ -1,41 +1,38 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  FlatList,
-} from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import React from "react";
-import uuid from 'react-native-uuid';
+import { FlatList, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { UserList, defaultList } from "../assets/data";
 
+const ListItem = ({ id, listType }) => {
 
-const openTaskList = () => {
-  console.log("Open Task List");
-};
+  const [isComplete, setComplete] = useState(false);
 
-const ListItem = ({Data, scrollEnabled, id}) => {
   return (
-    <View style={styles.DataSection}>
-      <FlatList
-        data={Data}
-        key={id}
-        style={styles.Data}
-        scrollEnabled={scrollEnabled}
-        showsVerticalScrollIndicator={true}
-        renderItem={({ item }) => (
-          <Pressable
-            style={({ pressed }) => [
-              styles.listItem,
-              pressed && styles.listItemPressed,
-            ]}
-            onPress={openTaskList}
-          >
-            <Icon name={item.icon} size={30} color={item.color} />
-            <Text style={styles.listItemText}>{item.title}</Text>
-          </Pressable>
-        )}
-      />
+    <View style={styles.container}>
+      {listType === 0 ? (
+        <FlatList
+          keyExtractor={(item, index) => {
+            index.toString();
+          }}
+          data={defaultList[id - 1].tasks}
+          style={styles.ListItem}
+          renderItem={({ item }) => (
+            <View style={styles.taskContainer}>
+              
+              <Text style={styles.taskTitle}>{item}</Text>
+            </View>
+          )}
+        />
+      ) : (
+        <FlatList
+          data={UserList[id - 5]}
+          style={styles.ListItem}
+          renderItem={({ item }) => (
+            <View style={styles.taskContainer}>
+              <Text style={styles.taskTitle}>{item.title}</Text>
+            </View>
+          )}
+        />
+      )}
     </View>
   );
 };
@@ -43,30 +40,25 @@ const ListItem = ({Data, scrollEnabled, id}) => {
 export default ListItem;
 
 const styles = StyleSheet.create({
-  DataSection: {
-    height: "35%", // This allows the section to take remaining space
-    width: "100%",
-  },
-  Data: {
-    flex: 1, // Added flex to ensure content is scrollable
-    backgroundColor: "transparent",
-  },
+  container:{
+    display: "flex",
+    justifyContent: "center",
+    padding: 20,
 
-  listItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 15,
-    gap: 20,
+    
   },
-
-  listItemPressed: {
-    backgroundColor: "rgba(255, 255, 255, 0.1)", // Light overlay when pressed
-    transform: [{ scale: 0.98 }], // Slightly shrink when pressed
-  },
-
-  listItemText: {
-    fontSize: 20,
+  taskTitle: {
     color: "white",
+    fontSize: 20,
   },
+
+  taskContainer:{
+    backgroundColor: "#222222",
+    marginVertical: 5,
+    padding: 10,
+    borderRadius: 10,
+
+
+  }, 
+
 });

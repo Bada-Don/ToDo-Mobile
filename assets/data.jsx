@@ -65,7 +65,7 @@ export const defaultList = [
 
 export const UserList = [
   {
-    id: 1,
+    id: 6,
     title: "College Work",
     icon: "school",
     color: "#a1a1a1ff",
@@ -78,7 +78,7 @@ export const UserList = [
     ],
   },
   {
-    id: 2,
+    id: 7,
     title: "Hackathon Work",
     icon: "code-braces-box",
     color: "#808080", // slightly distinct gray
@@ -91,7 +91,7 @@ export const UserList = [
     ],
   },
   {
-    id: 3,
+    id: 8,
     title: "Shop",
     icon: "shopping",
     color: "#6a6a6aff",

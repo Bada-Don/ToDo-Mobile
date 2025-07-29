@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, Image } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import ListItem from "../components/ListItem";
+import TaskList from "../components/TaskList.jsx";
 import { defaultList, UserList } from "../assets/data.jsx";
 import NewListModal from "../components/NewListModal.jsx";
 import { FAB, Portal, PaperProvider } from "react-native-paper";
 import { useState } from "react";
+import Banner from "../components/Banner.jsx";
 
 const HomeScreen = () => {
   const NewTaskList = () => {
@@ -12,7 +13,7 @@ const HomeScreen = () => {
     setTaskModalVis(!taskModalVis);
   };
 
-  const [taskCount, setTaskCount] = useState(3);
+  const [taskCount, setTaskCount] = useState(9);
 
   const addTask = (task) => {
     console.log("addTask() called...");
@@ -35,13 +36,16 @@ const HomeScreen = () => {
   return (
     <PaperProvider>
       <SafeAreaView style={styles.container}>
+
+        <Banner bannerImg={require("../assets/blackBanner.jpg")} heroText={"Welcome Harshit"} />
+
         <Text style={styles.headerText}>Your Tasks List</Text>
 
-        <ListItem Data={defaultList} scrollEnabled={false} />
+        <TaskList Data={defaultList} scrollEnabled={false} />
 
         <View style={styles.horizontalLine} />
 
-        <ListItem Data={UserList} scrollEnabled={true} />
+        <TaskList Data={UserList} scrollEnabled={true} />
 
         <NewListModal
           visible={taskModalVis}
@@ -69,7 +73,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000000ff",
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
   },
 
   fab: {
