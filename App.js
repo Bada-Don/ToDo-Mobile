@@ -14,16 +14,22 @@ import EditTask from "./screens/EditTask";
 import ListPage from "./screens/ListPage";
 
 export default function App() {
-  const [screen, setScreen] = useState("ListPage");
-
+  const [screen, setScreen] = useState("HomeScreen");
+  const [id, setId] = useState(1);
+  const [listType, setListType] = useState(0);
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar translucent={true} backgroundColor="transparent" barStyle="light-content" />
+      <StatusBar
+        translucent={true}
+        backgroundColor="transparent"
+        barStyle="light-content"
+      />
       {/* Content Section - Takes remaining space */}
+
       <View style={styles.contentSection}>
-        {screen === "HomeScreen" && <HomeScreen />}
+        {screen === "HomeScreen" && <HomeScreen setScreen={setScreen} setId={setId} setListType={setListType} />}
         {screen === "EditTask" && <EditTask />}
-        {screen === "ListPage" && <ListPage />}
+        {screen === "ListPage" && <ListPage setScreen={setScreen} id={id} listType={listType} />}
       </View>
     </SafeAreaView>
   );
@@ -34,8 +40,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "black",
   },
-  
-  
+
   contentSection: {
     flex: 1, // Takes remaining 80% of screen
     width: "100%",

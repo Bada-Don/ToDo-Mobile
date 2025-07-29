@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View, SafeAreaView, Image } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import TaskList from "../components/TaskList.jsx";
-import { defaultList, UserList } from "../assets/data.jsx";
-import NewListModal from "../components/NewListModal.jsx";
+import TaskList from "../components/TaskList";
+import { defaultList, UserList } from "../assets/data";
+import NewListModal from "../components/NewListModal";
 import { FAB, Portal, PaperProvider } from "react-native-paper";
 import { useState } from "react";
-import Banner from "../components/Banner.jsx";
+import Banner from "../components/Banner";
 
-const HomeScreen = () => {
+const HomeScreen = ({ setScreen, setListType, setId }) => {
   const NewTaskList = () => {
     console.log("Opening Modal");
     setTaskModalVis(!taskModalVis);
@@ -15,8 +15,8 @@ const HomeScreen = () => {
 
   const [taskCount, setTaskCount] = useState(9);
 
-  const addTask = (task) => {
-    console.log("addTask() called...");
+  const addTaskList = (task) => {
+    console.log("addTaskList() called...");
     console.log(task);
     setTaskCount(taskCount + 1);
     UserList.push({
@@ -24,6 +24,7 @@ const HomeScreen = () => {
       icon: "shopping",
       color: "#6a6a6aff",
       id: taskCount,
+      tasks: [],
     });
   };
 
@@ -43,21 +44,33 @@ const HomeScreen = () => {
 
         <Text style={styles.headerText}>Your Tasks List</Text>
 
-        <TaskList Data={defaultList} scrollEnabled={false} />
+        <TaskList
+          Data={defaultList}
+          setScreen={setScreen}
+          setId={setId}
+          setListType={setListType}
+          scrollEnabled={false}
+        />
 
         <View style={styles.horizontalLine} />
 
-        <TaskList Data={UserList} scrollEnabled={true} />
+        <TaskList
+          Data={UserList}
+          setScreen={setScreen}
+          setId={setId}
+          setListType={setListType}
+          scrollEnabled={true}
+        />
 
         <NewListModal
           visible={taskModalVis}
           onClose={closeModal}
-          task={addTask}
+          task={addTaskList}
         />
 
         <Portal>
           <FAB
-            icon="pencil-plus"
+            icon="playlist-plus"
             style={styles.fab}
             onPress={NewTaskList}
             color="#000000ff"

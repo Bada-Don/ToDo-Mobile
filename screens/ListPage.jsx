@@ -1,21 +1,115 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  FlatList,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import React, { useState } from "react";
 import Banner from "../components/Banner";
 import { UserList, defaultList } from "../assets/data";
 import ListItem from "../components/ListItem";
+import { PaperProvider, Portal, FAB } from "react-native-paper";
+import NewListModal from "../components/NewListModal.jsx";
 
-const ListPage = () => {
+const ListPage = ({ id, listType, setScreen }) => {
+  const data =
+    listType === 0 ? defaultList[id - 1].tasks : UserList[id - 6].tasks;
+
+  const [taskList, setTaskList] = useState(data);
+
+  const onToggleStatus = (index) => {
+    const updatedTaskList = [...taskList];
+    updatedTaskList[index].done = !updatedTaskList[index].done;
+    setTaskList(updatedTaskList);
+  };
+
+  const IndexedTaskList = taskList.map((item, index) => ({ ...item, index }));
+
+  const Completed = IndexedTaskList.filter((item) => item.done);
+  const inCompleted = IndexedTaskList.filter((item) => !item.done);
+
+  const NewTask = () => {
+    console.log("Opening Modal");
+    setTaskModalVis(!taskModalVis);
+  };
+
+  const addNewTask = (task) => {
+    console.log("addNewTask() called...");
+    console.log("......");
+    console.log("......");
+    console.log("Opening Modal");
+    console.log("......");
+    console.log("......");
+    setTaskModalVis(!taskModalVis);
+    console.log(task);
+    setTaskList((prevList) => [...prevList, { task: task, done: false }]);
+  };
+
+  const closeModal = () => {
+    setTaskModalVis(false);
+    console.log("Modal Closed");
+  };
+
+  const [taskModalVis, setTaskModalVis] = useState(false);
   return (
-    <SafeAreaView style={styles.container}>
-      <Banner
-        bannerImg={require("../assets/blackBanner.jpg")}
-        heroText={"List Page"}
-      />
-      <Text style={styles.headerText}>Incomplete</Text>
-     <ListItem id={1} listType={0} done={false} />
-      <Text style={styles.headerText}>Completed</Text>
-     <ListItem id={7} listType={1} done={true} />
-    </SafeAreaView>
+    <PaperProvider>
+      <SafeAreaView style={styles.container}>
+        <Banner
+          bannerImg={require("../assets/blackBanner.jpg")}
+          heroText={"List Page"}
+        />
+          <Text style={styles.headerText}>Incomplete</Text>
+          <FlatList
+            data={inCompleted}
+            style={styles.ListItem}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <ListItem
+                task={item.task}
+                onToggle={() => onToggleStatus(item.index)}
+                done={item.done}
+              />
+            )}
+          />
+          <Text style={styles.headerText}>Completed</Text>
+          <FlatList
+            data={Completed}
+            style={styles.ListItem}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <ListItem
+                task={item.task}
+                onToggle={() => onToggleStatus(item.index)}
+                done={item.done}
+              />
+            )}
+          />
+        <NewListModal
+          visible={taskModalVis}
+          onClose={closeModal}
+          task={addNewTask}
+        />
+        <Portal>
+          <FAB
+            icon="arrow-left"
+            style={styles.homeBtn}
+            onPress={() => setScreen("HomeScreen")}
+            color="#ffffffff"
+            customSize={40}
+          />
+
+          <FAB
+            icon="pen-plus"
+            style={styles.fab}
+            onPress={NewTask}
+            color="#000000ff"
+            customSize={56}
+          />
+        </Portal>
+      </SafeAreaView>
+    </PaperProvider>
   );
 };
 
@@ -25,6 +119,22 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flex: 1,
+  },
+  homeBtn: {
+    position: "absolute",
+    margin: 30,
+    marginLeft: 10,
+    left: 0,
+    top: 0,
+    borderRadius: 100,
+    backgroundColor: "#222222",
+  },
+  fab: {
+    position: "absolute",
+    margin: 30,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "white",
   },
   text: {
     color: "white",
@@ -36,9 +146,14 @@ const styles = StyleSheet.create({
     fontSize: 25,
     padding: 10,
   },
-  ListItem:{
+  ListItem: {
     color: "white",
     fontSize: 20,
-
-  }
+    paddingHorizontal: 20,
+    // backgroundColor: "red",
+    height: "10%",
+  },
+  taskSec:{
+    height: "4%"
+  },
 });

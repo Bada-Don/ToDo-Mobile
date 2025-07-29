@@ -3,35 +3,26 @@ import React, { useState } from "react";
 import { UserList, defaultList } from "../assets/data";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const ListItem = ({ id, listType, done }) => {
-  const [isComplete, setComplete] = useState(false);
+const ListItem = ({ task, done, onToggle }) => {
+  const [isComplete, setComplete] = useState(done);
 
   const toggleComplete = (item) => {
 
-    console.log(item.task);
+    setComplete(!isComplete);
   };
 
-  const data = listType === 0 ? defaultList[id - 1].tasks : UserList[id - 5].tasks;
-  const renderOrNot = done && isComplete;
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={data}
-        style={styles.ListItem}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.taskContainer}>
-            <Pressable onPress={()=>toggleComplete(item)}>
-              <Icon
-                name={isComplete ? "check-circle-outline" : "circle-outline"}
-                color="white"
-                size={24}
-              />
-            </Pressable>
-            <Text style={styles.taskTitle}>{item.task}{item.done == true? " (true)": " (false)"}</Text>
-          </View>
-        )}
-      />
+    <View style={styles.taskContainer}>
+      <Pressable onPress={onToggle}>
+        <Icon
+          name={isComplete ? "check-circle-outline" : "circle-outline"}
+          color="white"
+          size={24}
+        />
+      </Pressable>
+      <Text style={styles.taskTitle}>
+        {task}
+      </Text>
     </View>
   );
 };

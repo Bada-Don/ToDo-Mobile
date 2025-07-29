@@ -4,11 +4,16 @@ import React from "react";
 import uuid from "react-native-uuid";
 import { Button } from "react-native-paper";
 
-const openTaskList = () => {
-  console.log("Open Task List");
-};
-
-const TaskList = ({ Data, scrollEnabled }) => {
+const TaskList = ({ Data, scrollEnabled, setScreen, setId, setListType }) => {
+  const openTaskList = (item) => {
+    console.log(setScreen);
+    console.log(item.id);
+    console.log("Open Task List");
+    console.log(scrollEnabled === true ? "UserList" : "DefaultList")
+    setId(item.id);
+    setListType(scrollEnabled === true ? 1 : 0);
+    setScreen("ListPage")
+  };
   return (
     <View style={styles.DataSection}>
       <FlatList
@@ -23,13 +28,9 @@ const TaskList = ({ Data, scrollEnabled }) => {
               styles.listItem,
               pressed && styles.listItemPressed,
             ]}
-            onPress={openTaskList}
+            onPress={() => openTaskList(item)}
           >
-            <Icon
-              name={item.icon}
-              color={item.color}
-              size={24}
-            />
+            <Icon name={item.icon} color={item.color} size={24} />
             <Text style={styles.listItemText}>{item.title}</Text>
           </Pressable>
         )}
