@@ -1,15 +1,9 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import { UserList, defaultList } from "../assets/data";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const ListItem = ({ task, done, onToggle }) => {
   const [isComplete, setComplete] = useState(done);
-
-  const toggleComplete = (item) => {
-
-    setComplete(!isComplete);
-  };
 
   return (
     <View style={styles.taskContainer}>
@@ -20,9 +14,7 @@ const ListItem = ({ task, done, onToggle }) => {
           size={24}
         />
       </Pressable>
-      <Text style={styles.taskTitle}>
-        {task}
-      </Text>
+      <Text style={styles.taskTitle}>{task}</Text>
     </View>
   );
 };
@@ -30,11 +22,6 @@ const ListItem = ({ task, done, onToggle }) => {
 export default ListItem;
 
 const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    padding: 20,
-  },
   taskTitle: {
     color: "white",
     fontSize: 20,

@@ -7,10 +7,13 @@ import { FAB, Portal, PaperProvider } from "react-native-paper";
 import { useState } from "react";
 import Banner from "../components/Banner";
 
-const HomeScreen = ({ setScreen, setListType, setId }) => {
+const HomeScreen = ({ navigation }) => {
   const NewTaskList = () => {
     console.log("Opening Modal");
     setTaskModalVis(!taskModalVis);
+  };
+  const handleNavigate = (id, listType) => {
+    navigation.navigate("ListPage", { id, listType });
   };
 
   const [taskCount, setTaskCount] = useState(9);
@@ -46,9 +49,7 @@ const HomeScreen = ({ setScreen, setListType, setId }) => {
 
         <TaskList
           Data={defaultList}
-          setScreen={setScreen}
-          setId={setId}
-          setListType={setListType}
+          onPressItem={(id) => handleNavigate(id, 0)}
           scrollEnabled={false}
         />
 
@@ -56,9 +57,7 @@ const HomeScreen = ({ setScreen, setListType, setId }) => {
 
         <TaskList
           Data={UserList}
-          setScreen={setScreen}
-          setId={setId}
-          setListType={setListType}
+          onPressItem={(id) => handleNavigate(id, 1)}
           scrollEnabled={true}
         />
 
@@ -88,7 +87,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000000ff",
-    // paddingHorizontal: 10,
   },
 
   fab: {

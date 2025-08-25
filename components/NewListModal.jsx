@@ -9,10 +9,9 @@ const NewListModal = ({ visible, onClose, task }) => {
     setInput(text);
   };
   const handleSubmit = () => {
-    // console.log(input);
-    task(input)
-    setInput("")
-    onClose()
+    task(input);
+    setInput("");
+    onClose();
   };
   return (
     <Modal
@@ -24,7 +23,7 @@ const NewListModal = ({ visible, onClose, task }) => {
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <View style={styles.head}>
-            <Text style={styles.modalText}>New List</Text>
+            <Text style={styles.modalText}>Add new</Text>
           </View>
           <TextInput
             textColor="white"
@@ -40,7 +39,7 @@ const NewListModal = ({ visible, onClose, task }) => {
               textColor="black"
               mode="contained"
               onPress={handleSubmit}
-              disabled={input==''}
+              disabled={input == ""}
             >
               Submit
             </Button>
